@@ -1,0 +1,12 @@
+#ifndef LLVM_LIB_TARGET_GOGIPC_TARGETINFO_GOIPCTARGETINFO_H
+#define LLVM_LIB_TARGET_GOGIPC_TARGETINFO_GOGIPCTARGETINFO_H
+
+namespace llvm {
+
+class Target;
+
+Target &getTheGogiPCTarget();
+
+} // end namespace llvm
+
+#endif // LLVM_LIB_TARGET_GOGIPC_TARGETINFO_GOGIPCTARGETINFO_H
