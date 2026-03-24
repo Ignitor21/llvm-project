@@ -20,6 +20,7 @@ add_llvm_target(GogiPCCodeGen
   GogiPCAsmPrinter.cpp
   GogiPCISelDagToDag.cpp
   GogiPCISelLowering.cpp
+  GogiPCMCInstLower.cpp
 
   LINK_COMPONENTS
   CodeGen

@@ -21,6 +21,19 @@
 namespace llvm {
 class GogiPCTargetMachine;
 class FunctionPass;
+class GogiPCSubtarget;
+class AsmPrinter;
+class InstructionSelector;
+class MCInst;
+class MCOperand;
+class MachineInstr;
+class MachineOperand;
+class PassRegistry;
+
+bool lowerGogiPCMachineInstrToMCInst(const MachineInstr *MI, MCInst &OutMI,
+                                  AsmPrinter &AP);
+bool LowerGogiPCMachineOperandToMCOperand(const MachineOperand &MO,
+                                       MCOperand &MCOp, const AsmPrinter &AP);
 
 FunctionPass *createGogiPCISelDag(GogiPCTargetMachine &TM, CodeGenOptLevel OptLevel);
 

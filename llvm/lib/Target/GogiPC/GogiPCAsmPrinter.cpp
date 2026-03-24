@@ -38,6 +38,11 @@ public:
   StringRef getPassName() const override { return "GogiPC Assembly Printer"; }
 
   bool lowerPseudoInstExpansion(const MachineInstr *MI, MCInst &Inst);
+
+  // Used in pseudo lowerings
+  bool lowerOperand(const MachineOperand &MO, MCOperand &MCOp) const {
+    return LowerGogiPCMachineOperandToMCOperand(MO, MCOp, *this);
+  }
 };
 
 } // end anonymous namespace
@@ -53,6 +58,10 @@ void GogiPCAsmPrinter::emitInstruction(const MachineInstr *MI) {
     EmitToStreamer(*OutStreamer, OutInst);
     return;
   }
+
+  MCInst TmpInst;
+  if (!lowerGogiPCMachineInstrToMCInst(MI, TmpInst, *this))
+    EmitToStreamer(*OutStreamer, TmpInst);
 }
 
 // Force static initialization.
