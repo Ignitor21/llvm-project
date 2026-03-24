@@ -1,5 +1,6 @@
 #include "MCTargetDesc/GogiPCInfo.h"
 #include "GogiPC.h"
+#include "GogiPCInstPrinter.h"
 #include "GogiPCMCAsmInfo.h"
 #include "TargetInfo/GogiPCTargetInfo.h"
 #include "llvm/MC/MCDwarf.h"
@@ -52,6 +53,15 @@ static MCAsmInfo *createGogiPCMCAsmInfo(const MCRegisterInfo &MRI,
   return MAI;
 }
 
+static MCInstPrinter *createGogiPCMCInstPrinter(const Triple &T,
+                                             unsigned SyntaxVariant,
+                                             const MCAsmInfo &MAI,
+                                             const MCInstrInfo &MII,
+                                             const MCRegisterInfo &MRI) {
+  GOGIPC_DUMP_MAGENTA
+  return new GogiPCInstPrinter(MAI, MII, MRI);
+}
+
 
 // We need to define this function for linking succeed
 extern "C" LLVM_EXTERNAL_VISIBILITY void LLVMInitializeGogiPCTargetMC() {
@@ -65,4 +75,6 @@ extern "C" LLVM_EXTERNAL_VISIBILITY void LLVMInitializeGogiPCTargetMC() {
   // Register the MC subtarget info.
   TargetRegistry::RegisterMCSubtargetInfo(TheGogiPCTarget,
                                           createGogiPCMCSubtargetInfo);
+  // Register the MCInstPrinter
+  TargetRegistry::RegisterMCInstPrinter(TheGogiPCTarget, createGogiPCMCInstPrinter);
 }
