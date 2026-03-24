@@ -4,7 +4,9 @@
 #include "GogiPC.h"
 #include "GogiPCFrameLowering.h"
 #include "GogiPCISelLowering.h"
+#include "GogiPCInstrInfo.h"
 #include "GogiPCRegisterInfo.h"
+#include "llvm/CodeGen/SelectionDAGTargetInfo.h"
 #include "llvm/CodeGen/TargetSubtargetInfo.h"
 
 #define GET_SUBTARGETINFO_HEADER
@@ -16,6 +18,8 @@ class GogiPCSubtarget : public GogiPCGenSubtargetInfo {
   GogiPCTargetLowering TLInfo;
   GogiPCFrameLowering FrameLowering;
   GogiPCRegisterInfo RegInfo;
+  GogiPCInstrInfo InstrInfo;
+  SelectionDAGTargetInfo TSInfo;
 
 public:
   GogiPCSubtarget(const Triple &TT, const std::string &CPU, const std::string &FS,
@@ -36,6 +40,11 @@ public:
   const GogiPCRegisterInfo *getRegisterInfo() const override {
     GOGIPC_DUMP_CYAN
     return &RegInfo;
+  }
+  const GogiPCInstrInfo *getInstrInfo() const override { return &InstrInfo; }
+  const SelectionDAGTargetInfo *getSelectionDAGInfo() const override {
+    GOGIPC_DUMP_CYAN
+    return &TSInfo;
   }
 };
 
