@@ -3,12 +3,14 @@ add_llvm_component_group(GogiPC)
 set(LLVM_TARGET_DEFINITIONS GogiPC.td)
 
 tablegen(LLVM GogiPCGenRegisterInfo.inc -gen-register-info)
+tablegen(LLVM GogiPCGenInstrInfo.inc -gen-instr-info)
 
 add_public_tablegen_target(GogiPCCommonTableGen)
 
 add_llvm_target(GogiPCCodeGen
   GogiPCTargetMachine.cpp
   GogiPCRegisterInfo.cpp
+  GogiPCInstrInfo.cpp
 
   LINK_COMPONENTS
   CodeGen

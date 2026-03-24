@@ -1,6 +1,10 @@
 #ifndef LLVM_LIB_TARGET_GOGIPC_MCTARGETDESC_GOGIPCMCTARGETDESC_H
 #define LLVM_LIB_TARGET_GOGIPC_MCTARGETDESC_GOGIPCMCTARGETDESC_H
 
+// Defines symbolic names for the GogiPC instructions.
+#define GET_INSTRINFO_ENUM
+#include "GogiPCGenInstrInfo.inc"
+
 // Defines symbolic names for GogiPC registers.  This defines a mapping from
 // register name to register number.
 //

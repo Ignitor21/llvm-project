@@ -1,4 +1,8 @@
 include "llvm/Target/Target.td"
 include "GogiPCRegisterInfo.td"
+include "GogiPCInstrInfo.td"
 
-def GogiPC : Target;
+def GogiPCInstrInfo : InstrInfo;
+def GogiPC : Target {
+  let InstructionSet = GogiPCInstrInfo;
+}
