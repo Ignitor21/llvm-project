@@ -1,10 +1,13 @@
 #include "MCTargetDesc/GogiPCInfo.h"
 #include "GogiPC.h"
+#include "GogiPCMCAsmInfo.h"
 #include "TargetInfo/GogiPCTargetInfo.h"
+#include "llvm/MC/MCDwarf.h"
 #include "llvm/MC/MCInstrInfo.h"
 #include "llvm/MC/MCRegisterInfo.h"
 #include "llvm/MC/MCSubtargetInfo.h"
 #include "llvm/MC/TargetRegistry.h"
+#include "llvm/Support/ErrorHandling.h"
 
 using namespace llvm;
 
@@ -38,10 +41,23 @@ static MCSubtargetInfo *createGogiPCMCSubtargetInfo(const Triple &TT,
   return createGogiPCMCSubtargetInfoImpl(TT, CPU, /*TuneCPU*/ CPU, FS);
 }
 
+static MCAsmInfo *createGogiPCMCAsmInfo(const MCRegisterInfo &MRI,
+                                     const Triple &TT,
+                                     const MCTargetOptions &Options) {
+  GOGIPC_DUMP_MAGENTA
+  MCAsmInfo *MAI = new GogiPCELFMCAsmInfo(TT);
+  unsigned SP = MRI.getDwarfRegNum(GogiPC::R1, true);
+  MCCFIInstruction Inst = MCCFIInstruction::cfiDefCfa(nullptr, SP, 0);
+  MAI->addInitialFrameState(Inst);
+  return MAI;
+}
+
+
 // We need to define this function for linking succeed
 extern "C" LLVM_EXTERNAL_VISIBILITY void LLVMInitializeGogiPCTargetMC() {
   GOGIPC_DUMP_MAGENTA
   Target &TheGogiPCTarget = getTheGogiPCTarget();
+  RegisterMCAsmInfoFn X(TheGogiPCTarget, createGogiPCMCAsmInfo);
   // Register the MC register info.
   TargetRegistry::RegisterMCRegInfo(TheGogiPCTarget, createGogiPCMCRegisterInfo);
   // Register the MC instruction info.

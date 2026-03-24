@@ -1,5 +1,6 @@
 add_llvm_component_library(LLVMGogiPCDesc
   GogiPCMCTargetDesc.cpp
+  GogiPCMCAsmInfo.cpp
 
   LINK_COMPONENTS
   MC
