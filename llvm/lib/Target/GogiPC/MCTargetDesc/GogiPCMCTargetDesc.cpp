@@ -3,6 +3,7 @@
 #include "TargetInfo/GogiPCTargetInfo.h"
 #include "llvm/MC/MCInstrInfo.h"
 #include "llvm/MC/MCRegisterInfo.h"
+#include "llvm/MC/MCSubtargetInfo.h"
 #include "llvm/MC/TargetRegistry.h"
 
 using namespace llvm;
@@ -12,6 +13,10 @@ using namespace llvm;
 
 #define GET_INSTRINFO_MC_DESC
 #include "GogiPCGenInstrInfo.inc"
+
+#define GET_SUBTARGETINFO_MC_DESC
+#include "GogiPCGenSubtargetInfo.inc"
+
 
 static MCRegisterInfo *createGogiPCMCRegisterInfo(const Triple &TT) {
   GOGIPC_DUMP_MAGENTA
@@ -27,6 +32,12 @@ static MCInstrInfo *createGogiPCMCInstrInfo() {
   return X;
 }
 
+static MCSubtargetInfo *createGogiPCMCSubtargetInfo(const Triple &TT,
+                                                 StringRef CPU, StringRef FS) {
+  GOGIPC_DUMP_MAGENTA
+  return createGogiPCMCSubtargetInfoImpl(TT, CPU, /*TuneCPU*/ CPU, FS);
+}
+
 // We need to define this function for linking succeed
 extern "C" LLVM_EXTERNAL_VISIBILITY void LLVMInitializeGogiPCTargetMC() {
   GOGIPC_DUMP_MAGENTA
@@ -35,4 +46,7 @@ extern "C" LLVM_EXTERNAL_VISIBILITY void LLVMInitializeGogiPCTargetMC() {
   TargetRegistry::RegisterMCRegInfo(TheGogiPCTarget, createGogiPCMCRegisterInfo);
   // Register the MC instruction info.
   TargetRegistry::RegisterMCInstrInfo(TheGogiPCTarget, createGogiPCMCInstrInfo);
+  // Register the MC subtarget info.
+  TargetRegistry::RegisterMCSubtargetInfo(TheGogiPCTarget,
+                                          createGogiPCMCSubtargetInfo);
 }
