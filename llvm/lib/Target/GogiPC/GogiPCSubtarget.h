@@ -2,6 +2,7 @@
 #define LLVM_LIB_TARGET_GOGIPC_GOGIPCSUBTARGET_H
 
 #include "GogiPC.h"
+#include "GogiPCFrameLowering.h"
 #include "GogiPCISelLowering.h"
 #include "llvm/CodeGen/TargetSubtargetInfo.h"
 
@@ -12,6 +13,7 @@ namespace llvm {
 
 class GogiPCSubtarget : public GogiPCGenSubtargetInfo {
   GogiPCTargetLowering TLInfo;
+  GogiPCFrameLowering FrameLowering;
 
 public:
   GogiPCSubtarget(const Triple &TT, const std::string &CPU, const std::string &FS,
@@ -24,6 +26,10 @@ public:
   const GogiPCTargetLowering *getTargetLowering() const override {
     GOGIPC_DUMP_CYAN
     return &TLInfo;
+  }
+  const GogiPCFrameLowering *getFrameLowering() const override {
+    GOGIPC_DUMP_CYAN
+    return &FrameLowering;
   }
 };
 

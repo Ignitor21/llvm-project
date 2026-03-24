@@ -12,6 +12,7 @@ using namespace llvm;
 
 GogiPCSubtarget::GogiPCSubtarget(const Triple &TT, const std::string &CPU,
                            const std::string &FS, const TargetMachine &TM)
-    : GogiPCGenSubtargetInfo(TT, CPU, /*TuneCPU=*/CPU, FS), TLInfo(TM, *this) {
+    : GogiPCGenSubtargetInfo(TT, CPU, /*TuneCPU=*/CPU, FS), TLInfo(TM, *this),
+      FrameLowering(*this) {
   GOGIPC_DUMP_CYAN
 }
