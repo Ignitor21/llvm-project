@@ -6,6 +6,7 @@ tablegen(LLVM GogiPCGenRegisterInfo.inc -gen-register-info)
 tablegen(LLVM GogiPCGenInstrInfo.inc -gen-instr-info)
 tablegen(LLVM GogiPCGenSubtargetInfo.inc -gen-subtarget)
 tablegen(LLVM GogiPCGenMCPseudoLowering.inc -gen-pseudo-lowering)
+tablegen(LLVM GogiPCGenDAGISel.inc -gen-dag-isel)
 
 add_public_tablegen_target(GogiPCCommonTableGen)
 
@@ -15,6 +16,7 @@ add_llvm_target(GogiPCCodeGen
   GogiPCInstrInfo.cpp
   GogiPCSubtarget.cpp
   GogiPCAsmPrinter.cpp
+  GogiPCISelDagToDag.cpp
 
   LINK_COMPONENTS
   CodeGen
@@ -23,6 +25,7 @@ add_llvm_target(GogiPCCodeGen
   Target
   GogiPCInfo
   AsmPrinter
+  SelectionDAG
 
   ADD_TO_COMPONENT
   GogiPC

@@ -3,6 +3,7 @@
 
 #include "MCTargetDesc/GogiPCMCTargetDesc.h"
 #include "llvm/Support/raw_ostream.h"
+#include "llvm/Target/TargetMachine.h"
 
 #define GOGIPC_DUMP(Color)                                                     \
   {                                                                            \
@@ -17,5 +18,12 @@
 #define GOGIPC_DUMP_CYAN GOGIPC_DUMP(llvm::raw_ostream::CYAN)
 #define GOGIPC_DUMP_MAGENTA GOGIPC_DUMP(llvm::raw_ostream::MAGENTA)
 #define GOPIPC_DUMP_WHITE GOGIPC_DUMP(llvm::raw_ostream::WHITE)
+namespace llvm {
+class GogiPCTargetMachine;
+class FunctionPass;
+
+FunctionPass *createGogiPCISelDag(GogiPCTargetMachine &TM, CodeGenOptLevel OptLevel);
+
+} // namespace llvm
 
 #endif // LLVM_LIB_TARGET_GogiPC_GogiPC_H

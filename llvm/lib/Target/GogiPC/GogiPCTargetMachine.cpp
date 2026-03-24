@@ -34,8 +34,14 @@ public:
   GogiPCPassConfig(GogiPCTargetMachine &TM, PassManagerBase &PM)
       : TargetPassConfig(TM, PM) {}
 
+  GogiPCTargetMachine &getGogiPCTargetMachine() const {
+    return getTM<GogiPCTargetMachine>();
+  }
+
+
   bool addInstSelector() override {
     GOGIPC_DUMP_CYAN
+    addPass(createGogiPCISelDag(getGogiPCTargetMachine(), getOptLevel()));
     return false;
   }
 };
