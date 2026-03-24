@@ -10,8 +10,8 @@ using namespace llvm;
 #define GET_SUBTARGETINFO_CTOR
 #include "GogiPCGenSubtargetInfo.inc"
 
-GogiPCSubtarget::GogiPCSubtarget(const StringRef &CPU, const StringRef &TuneCPU,
-                           const StringRef &FS, const TargetMachine &TM)
-    : GogiPCGenSubtargetInfo(TM.getTargetTriple(), CPU, TuneCPU, FS) {
+GogiPCSubtarget::GogiPCSubtarget(const Triple &TT, const std::string &CPU,
+                           const std::string &FS, const TargetMachine &TM)
+    : GogiPCGenSubtargetInfo(TT, CPU, /*TuneCPU=*/CPU, FS), TLInfo(TM, *this) {
   GOGIPC_DUMP_CYAN
 }

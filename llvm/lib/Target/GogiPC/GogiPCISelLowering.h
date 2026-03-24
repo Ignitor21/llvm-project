@@ -22,6 +22,19 @@ enum NodeType : unsigned {
 
 } // namespace GogiPCISD
 
+class GogiPCTargetLowering : public TargetLowering {
+public:
+  explicit GogiPCTargetLowering(const TargetMachine &TM, const GogiPCSubtarget &STI);
+
+  /// This method returns the name of a target specific DAG node.
+  const char *getTargetNodeName(unsigned Opcode) const override;
+
+  GogiPCSubtarget const &getSubtarget() const { return STI; }
+
+private:
+  const GogiPCSubtarget &STI;
+};
+
 } // end namespace llvm
 
 #endif // LLVM_LIB_TARGET_GOGIPC_GOGIPCISELLOWERING_H
