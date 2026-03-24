@@ -1,6 +1,7 @@
 #ifndef LLVM_LIB_TARGET_GogiPC_GogiPC_H
 #define LLVM_LIB_TARGET_GogiPC_GogiPC_H
 
+#include "MCTargetDesc/GogiPCMCTargetDesc.h"
 #include "llvm/Support/raw_ostream.h"
 
 #define GOGIPC_DUMP(Color)                                                     \
@@ -15,5 +16,6 @@
 #define GOGIPC_DUMP_YELLOW GOGIPC_DUMP(llvm::raw_ostream::YELLOW)
 #define GOGIPC_DUMP_CYAN GOGIPC_DUMP(llvm::raw_ostream::CYAN)
 #define GOGIPC_DUMP_MAGENTA GOGIPC_DUMP(llvm::raw_ostream::MAGENTA)
+#define GOPIPC_DUMP_WHITE GOGIPC_DUMP(llvm::raw_ostream::WHITE)
 
 #endif // LLVM_LIB_TARGET_GogiPC_GogiPC_H
