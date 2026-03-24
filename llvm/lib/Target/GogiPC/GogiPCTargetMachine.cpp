@@ -1,6 +1,7 @@
 #include "GogiPCTargetMachine.h"
 #include "GogiPC.h"
 #include "TargetInfo/GogiPCTargetInfo.h"
+#include "llvm/CodeGen/TargetPassConfig.h"
 #include "llvm/MC/TargetRegistry.h"
 #include <optional>
 
@@ -23,4 +24,25 @@ GogiPCTargetMachine::GogiPCTargetMachine(const Target &T, const Triple &TT,
           Reloc::Static, getEffectiveCodeModel(CM, CodeModel::Small), OL) {
   GOGIPC_DUMP_CYAN
   initAsmInfo();
+}
+
+namespace {
+
+/// GogiPC Code Generator Pass Configuration Options.
+class GogiPCPassConfig : public TargetPassConfig {
+public:
+  GogiPCPassConfig(GogiPCTargetMachine &TM, PassManagerBase &PM)
+      : TargetPassConfig(TM, PM) {}
+
+  bool addInstSelector() override {
+    GOGIPC_DUMP_CYAN
+    return false;
+  }
+};
+
+} // end anonymous namespace
+
+TargetPassConfig *GogiPCTargetMachine::createPassConfig(PassManagerBase &PM) {
+  GOGIPC_DUMP_CYAN
+  return new GogiPCPassConfig(*this, PM);
 }
