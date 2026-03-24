@@ -1,6 +1,7 @@
 include "llvm/Target/Target.td"
 include "GogiPCRegisterInfo.td"
 include "GogiPCInstrInfo.td"
+include "GogiPCCallingConv.td"
 
 class Proc<string Name, list<SubtargetFeature> Features>
  : Processor<Name, NoItineraries, Features>;

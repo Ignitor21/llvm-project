@@ -7,6 +7,7 @@ tablegen(LLVM GogiPCGenInstrInfo.inc -gen-instr-info)
 tablegen(LLVM GogiPCGenSubtargetInfo.inc -gen-subtarget)
 tablegen(LLVM GogiPCGenMCPseudoLowering.inc -gen-pseudo-lowering)
 tablegen(LLVM GogiPCGenDAGISel.inc -gen-dag-isel)
+tablegen(LLVM GogiPCGenCallingConv.inc -gen-callingconv)
 
 add_public_tablegen_target(GogiPCCommonTableGen)
 
